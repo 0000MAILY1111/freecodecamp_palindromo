@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Juego de Palíndromos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 80px;
+      background-color: #f0f0f0;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 300px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    #resultado {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    #intentos {
+      margin-top: 15px;
+      font-size: 16px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>¿Es un palíndromo?</h1>
+
+  <input type="text" id="texto" placeholder="Escribe una palabra o frase">
+  <br>
+  <button onclick="verificarPalindromo()">Verificar</button>
+
+  <div id="resultado"></div>
+  <div id="intentos">Intentos: 0</div>
+
+  <script>
+    let contadorIntentos = 0;
+
+    function limpiarTexto(texto) {
+      return texto
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "") // Quitar tildes
+        .replace(/[^a-z0-9]/g, ""); // Quitar símbolos y espacios
+    }
+
+    function verificarPalindromo() {
+      const entrada = document.getElementById("texto").value;
+      const limpio = limpiarTexto(entrada);
+      const invertido = limpio.split("").reverse().join("");
+
+      const resultado = document.getElementById("resultado");
+      const intentos = document.getElementById("intentos");
+
+      contadorIntentos++;
+      intentos.textContent = "Intentos: " + contadorIntentos;
+
+      if (!entrada.trim()) {
+        resultado.textContent = "Por favor, escribe algo.";
+        resultado.style.color = "red";
+      } else if (limpio === invertido) {
+        resultado.textContent = "✅ ¡Es un palíndromo!";
+        resultado.style.color = "green";
+      } else {
+        resultado.textContent = "❌ No es un palíndromo.";
+        resultado.style.color = "red";
+      }
+    }
+  </script>
+
+</body>
+</html>
+
